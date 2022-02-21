@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 const port = process.env.PORT || 3000;
 
-mongoose.connect(`mongodb+srv://XXXX:XXXXX@clusteriot.h9pwp.mongodb.net/VA?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb+srv://anmoiotadmin:anmoiotadmin@clusteriot.h9pwp.mongodb.net/VA?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
     console.log('Database connection successful');
     server.listen(port, () => console.info(`listening on port ${port}`));
