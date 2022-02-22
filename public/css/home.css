@@ -135,11 +135,12 @@ canvas{
     grid-template-columns: 550px 550px;
     justify-content: center;
     height: 100%;
-    margin: 75px auto;
+    /* margin: 20px auto; */
 }
 
 .modeltext, .model{
     margin: 75px auto;
+    /* margin-top: 75px; */
 }
 
 .model{
@@ -147,5 +148,3 @@ canvas{
     width: 100%;
     height: 100%;
 }
-
-

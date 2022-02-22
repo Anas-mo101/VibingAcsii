@@ -13,6 +13,9 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/loaders/GLTFLoader.js"> </script>
     <script defer src="js/threeModel.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+
+    <link rel="stylesheet" href="css/slider.css">
+
     <title>Vibing Ascii</title>
 </head>
 <body>
@@ -65,15 +68,11 @@
             </div>
             
             <div class="model" id="3dalpha">
-
+                <!-- This work is based on "Voxel Alphabet" (https://sketchfab.com/3d-models/voxel-alphabet-4f9f377bff724326a9a71b03acdd02b2) by rodrivgm (https://sketchfab.com/rodrivgm) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/) -->
             </div>
 
-            <div class="model" >
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+            <div class="model" id="3dalpha2">
+
             </div>
 
             <div class="model" id="">
@@ -83,23 +82,114 @@
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
             </div>
-        </div>
 
+            <div class="modeltext">
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+            </div>
+            
+            <div class="model" id="3dalpha3">
+
+            </div>
+        </div>
     </div>
 
+    <div class="slider-container">
+        <div class="slider">
+            <input type="radio" name="testimonial" id="t-1" />
+            <input type="radio" name="testimonial" id="t-2" />
+            <input type="radio" name="testimonial" id="t-3" checked />
+            <input type="radio" name="testimonial" id="t-4" />
+            <input type="radio" name="testimonial" id="t-5" />
+            <div class="testimonials mb-8">
+              <label class="item" for="t-1">
+                <div class="mycard">
+                  <div>
+                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
+                  </div>
+                  <div>
+                    <p class="cardtitle">Name</p>
+                    <p class="carddescription">Description</p>
+                    <p class="cardprice"> price </p>
+                  </div>
+                </div>
+              </label>
+              <label class="item" for="t-2">
+                <div class="mycard">
+                  <div>
+                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
+                  </div>
+                  <div>
+                    <p class="cardtitle">Name</p>
+                    <p class="carddescription">Description</p>
+                    <p class="cardprice"> price </p>
+                  </div>
+                </div>
+              </label>
+              <label class="item" for="t-3">
+                <div class="mycard">
+                  <div>
+                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
+                  </div>
+                  <div>
+                    <p class="cardtitle">Name</p>
+                    <p class="carddescription">Description</p>
+                    <p class="cardprice"> price </p>
+                  </div>
+                </div>
+              </label>
+              <label class="item" for="t-4">
+                <div class="mycard">
+                  <div>
+                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
+                  </div>
+                  <div>
+                    <p class="cardtitle">Name</p>
+                    <p class="carddescription">Description</p>
+                    <p class="cardprice"> price </p>
+                  </div>
+                </div>
+              </label>
+              <label class="item" for="t-5">
+                <div class="mycard">
+                  <div>
+                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
+                  </div>
+                  <div>
+                    <p class="cardtitle">Name</p>
+                    <p class="carddescription">Description</p>
+                    <p class="cardprice"> price </p>
+                  </div>
+                </div>
+              </label>
+            </div>
+            
+            <div class="dots">
+              <label for="t-1"></label>
+              <label for="t-2"></label>
+              <label for="t-3"></label>
+              <label for="t-4"></label>
+              <label for="t-5"></label>
+            </div>
+          </div>
+    </div>
+
+    <!-- <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+            <h1>front</h1>
+            </div>
+            <div class="flip-card-back">
+            <h1>Back</h1>
+            </div>
+        </div>
+    </div> -->
 
 </body>
 </html>
 
 
 
-<!-- <div class="flip-card">
-    <div class="flip-card-inner">
-        <div class="flip-card-front">
-        <h1>front</h1>
-        </div>
-        <div class="flip-card-back">
-        <h1>Back</h1>
-        </div>
-    </div>
-</div> -->
