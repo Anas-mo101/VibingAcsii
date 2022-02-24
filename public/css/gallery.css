@@ -1,0 +1,75 @@
+
+.grid-container{
+    display: grid;   
+    grid-template-columns: 330px 330px 330px 330px;
+    justify-content: center;
+    justify-items: center;
+    height: 100%;
+}
+
+.ethlogo{
+    margin-top: 10px;
+    width: auto;
+    height: 30px;
+}
+
+.pricing{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.item {
+    margin: 25px 0 !important;
+    color: black;
+    border-radius: 10px;
+    --tw-border-opacity: 1;
+    border-color: rgba(30, 58, 138, var(--tw-border-opacity));
+    top: 0;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.4s;
+    -webkit-transform-style: preserve-3d;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    user-select: none;
+    cursor: pointer;
+    margin: 0 30px;
+    transition: 0.5s;
+}
+
+
+.item:hover {
+    width: 260px;
+    transition: 0.5s;
+}
+
+.cardimg {
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    height: auto;
+}
+
+.carddescription {
+    --tw-text-opacity: 1;
+    text-align: center;
+}
+
+.cardtitle {
+    font-weight: bold;
+    --tw-text-opacity: 1;
+    text-align: center;
+}
+
+.banner img{
+    width: auto;
+    max-width: 250px;
+}
+
+#back{
+    left: 1%;
+}

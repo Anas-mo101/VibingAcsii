@@ -1,8 +1,8 @@
 .mycard {
     height: 100%;
     width: 250px;
-    max-width: 24rem;
 }
+
 .cardtitle {
     font-weight: bold;
     --tw-text-opacity: 1;
@@ -12,6 +12,9 @@
 .cardimg {
     margin-left: auto;
     margin-right: auto;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+    height: auto;
 }
 
 .carddescription {
@@ -20,7 +23,7 @@
 }
   
 .slider-container {
-    margin: -175px 30px 0 30px;
+    margin: -70px 30px -60px 30px;
     color: rgb(0, 0, 0);
     display: flex;
     align-items: center;
@@ -47,35 +50,24 @@
     margin: 0 30px;
 }
 
-
 .item {
-    max-width: 20rem;
-    border-radius: 1.5rem;
-    border-width: 2px;
+    border-radius: 10px;
     --tw-border-opacity: 1;
     border-color: rgba(30, 58, 138, var(--tw-border-opacity));
     top: 0;
     position: relative;
     box-sizing: border-box;
     background-color: #fff;
-    padding: 30px;
-    width: 450px;
+    width: 250px;
     text-align: center;
     transition: transform 0.4s;
     -webkit-transform-style: preserve-3d;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     user-select: none;
     cursor: pointer;
-    /* margin: 0 -25px; */
-
+    margin: 0 30px;
 }
 
-.testimonials .item img {
-    width: 100%;
-    height: auto;
-    /* border-radius: 50%; */
-    /* border: 13px solid #3b344d; */
-}
 
 .testimonials .item p {
     color: rgb(0, 0, 0);
@@ -102,7 +94,42 @@
     margin: 7px;
     transition: transform 0.2s, color 0.2s;
 }
-  
+
+.pricing{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.ethlogo{
+    margin-top: 10px;
+    width: auto;
+    height: 30px;
+}
+
+.gallery h4{
+    text-align: center;
+    cursor: pointer;
+}
+
+.gallery a{
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.gallery a:hover{
+    transform: translate(0, -10px);
+    transition: 0.5s;
+}
+
+.gallery h2{
+    margin-top: -50px;
+    text-align: center;
+    font-size: 35px;
+}
+
 /* First */
 #t-1:checked ~ .dots label[for="t-1"] {
     transform: scale(2);
@@ -180,7 +207,7 @@ transform: translateX(600px) translateZ(-90px) translateY(-15px);
     transform: translateX(-300px) translateZ(-90px) translateY(-15px);
 }
 #t-3:checked ~ .testimonials label[for="t-3"] {
-    /* z-index: 3; */
+    z-index: 3;
 }
 #t-3:checked ~ .testimonials label[for="t-4"] {
     transform: translateX(300px) translateZ(-90px) translateY(-15px);

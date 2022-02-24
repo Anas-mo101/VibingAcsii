@@ -4,9 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" href="media/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script defer src="js/banner.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+    <title>Dashboard</title>
 </head>
 <body>
+    <div class="nav-icon" style="left: 1%;" id="back" onclick="window.location.href = '/admin-logout';"> 
+        <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 16px; margin-right: 6px;" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 15 15">
+          <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+          <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+        </svg>
+      </div>
 
+    <div id="banner">
+        <h1 id="p5title"> Dashboard </h1>
+        <div id="lineCanvas"> </div>
+      </div>
+    <section>
+        <div class="grid-container-4">
+            <div class="statistics">
+                <div class="stat-name">
+                    <h2> Frontpage Visits </h2>
+                </div>
+                <div class="stat-num">
+                    <div class="stat" id="FPV"> 0 </div>
+                </div>
+            </div>
+            <div class="statistics">
+                <div class="stat-name">
+                    <h2> Gallery Visits </h2>
+                </div>
+                <div class="stat-num">
+                    <div class="stat" id="GPV"> 0 </div>
+                </div>
+            </div>
+            <div class="statistics">
+                <div class="stat-name">
+                    <h2> Holders Page Visits </h2>
+                </div>
+                <div class="stat-num">
+                    <div class="stat" id="HPV"> 0 </div>
+                </div>
+            </div>
+            <div class="statistics">
+                <div class="stat-name">
+                    <h2> Openseas Directs </h2>
+                </div>
+                <div class="stat-num">
+                    <div class="stat" id="OSD"> 0 </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+
+    </section>
+
+    <div class="footer">
+        <img src="media/hand.jpg" alt="" srcset="">
+        <p>2022 &#169; Anmo Developement</p>
+    </div>
 </body>
 </html>

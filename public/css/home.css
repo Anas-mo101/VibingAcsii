@@ -1,10 +1,12 @@
-canvas{ 
-    outline:none; 
-    border:none; 
-}
 
 #sec-1-1{
     display: flex;
+}
+
+#p5title{
+    font-size: 50px;
+    position: absolute;
+    margin: 0 -50px;
 }
 
 #sec-1-1-1{
@@ -33,20 +35,15 @@ canvas{
 
 .flip-card {
     background-color: transparent;
-    width: 300px;
-    height: 200px;
+    /* height: 200px; */
     perspective: 1000px;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
 }
 
 .flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    /* position: relative; */
+    width: 250px;
+    height: 350px;
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
@@ -57,7 +54,7 @@ canvas{
 }
 
 .flip-card-front, .flip-card-back {
-    border-radius: 5px;
+    border-radius: 10px;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -93,24 +90,8 @@ canvas{
     transform: translate(-95%, -95%);
 }
 
-.nav-icon{
-    top: 5%;
+#go{
     left: 95%;
-    cursor: pointer;
-    z-index: 9999;
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: var(--primary-color);
-    color: rgb(255, 255, 255);
-    text-align: center;
-    transition: 0.5s;
-    border-radius: 50%;
-}
-
-.nav-icon:hover{
-    box-shadow: rgba(255, 255, 255, 0.35) 0px 0px 15px;
-    transition: 0.5s;
 }
 
 #canvas{
@@ -124,11 +105,7 @@ canvas{
     align-items: center;
 }
 
-#p5title{
-    font-size: 50px;
-    position: absolute;
-    margin: 0 -50px;
-}
+
 
 .grid-container{
     display: grid;   
@@ -138,13 +115,19 @@ canvas{
     /* margin: 20px auto; */
 }
 
-.modeltext, .model{
-    margin: 75px auto;
+.model{
+    
     /* margin-top: 75px; */
 }
 
 .model{
+    margin: 75px auto;
     text-align: center;
     width: 100%;
     height: 100%;
+}
+
+section h2{
+    text-align: center;
+    font-size: 30px;
 }

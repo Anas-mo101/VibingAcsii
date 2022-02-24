@@ -6,6 +6,8 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const {v4:uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
+const Admin = require('./models/admin');
+const Statistics = require('./models/statistics');
 
 const port = process.env.PORT || 3000;
 
@@ -37,14 +39,40 @@ app.set('view engine', 'ejs');
 // ============ get =============
 
 app.get('/dashboard', async (req, res) => { 
-    res.render("dashboard"); 
+    if(req.session.user){
+        res.render("dashboard"); 
+    }else{
+        res.render("login", {flag: "Session Ended"});
+    }
 });
 
-app.get('/', async (req, res) => { 
+app.get('/', async (req, res) => { // collect statistics
+    Statistics.updateOne({id: req.session.user},
+        {
+            $inc: { 
+                frontpageVisits: 1
+            } 
+        },
+    function(err, result){
+        if(err){
+            console.log("Error: " + err);
+        }
+    });
     res.render("frontpage"); 
 });
 
-app.get('/gallery', async (req, res) => { 
+app.get('/gallery', async (req, res) => {
+    Statistics.updateOne({id: req.session.user},
+        {
+            $inc: { 
+                galleryVisits: 1
+            } 
+        },
+    function(err, result){
+        if(err){
+            console.log("Error: " + err);
+        }
+    });
     res.render("gallery"); 
 });
 
@@ -52,12 +80,28 @@ app.get('/login', async (req, res) => {
     res.render("login"); 
 });
 
-app.get('/holders', async (req, res) => { 
+app.get('/holders', async (req, res) => {
+    Statistics.updateOne({id: req.session.user},
+        {
+            $inc: { 
+                holderVisits: 1
+            } 
+        },
+    function(err, result){
+        if(err){
+            console.log("Error: " + err);
+        }
+    });
     res.render("holders"); 
 });
 
-app.get('/single', async (req, res) => { 
-    res.render("single"); 
+app.get('/admin-logout', async (req, res) => {    
+    if(req.session.user){
+        req.session.user = undefined;
+        res.render("login", {flag: "Logged out"});
+    }else{
+        res.render("login", {flag: "Session Ended"});
+    }
 });
 
 // ============== post ===================
@@ -65,3 +109,41 @@ app.get('/single', async (req, res) => {
 app.post('/??', async (req, res) => { 
 
 });
+
+app.post('/admin-login-creds', async (req, res) => {    
+    Admin.findOne({
+        email: req.body.email
+    }, (err, result) => {
+        if(result && !err){
+            var temp = bcrypt.compareSync(req.body.pass,result.password);
+            if(temp){
+                req.session.user = result.id;
+                res.redirect("dashboard");
+            }else{
+                res.render("login", {flag: "Invalid Username/Password"});
+            }
+        }else{
+            res.render("login", {flag: "User Does Not Exist"});
+        }
+    });
+});
+
+
+// // Create admin
+// const admin = new Admin({
+//     id: uuidv4(),
+//     name: "anmo",
+//     restname: "mcd",
+//     email: "admin@va.com",
+//     password: "admin"
+// });
+// admin.save()
+
+// Create statistics
+// const statistics = new Statistics({
+//     frontpageVisits: 0,
+//     galleryVisits: 0,
+//     holderVisits: 0,
+//     osDirects: 0,
+// });
+// statistics.save()

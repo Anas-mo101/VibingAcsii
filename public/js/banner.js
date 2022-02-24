@@ -7,7 +7,7 @@ const cursor = {
 }
 
 function setup() {
-  let canvas = createCanvas(windowWidth, S,).parent("lineCanvas");
+  let canvas = createCanvas(windowWidth, S).parent("lineCanvas");
   background(0)
   // canvas.position(0,0,)
 }

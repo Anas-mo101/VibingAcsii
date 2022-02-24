@@ -10,6 +10,7 @@ html, body{
     margin: 0;
     max-width: 100%;
     overflow-x: hidden;
+    text-align: center;
 }
 
 ::-webkit-scrollbar {
@@ -26,4 +27,46 @@ html, body{
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: #303030; 
+}
+
+canvas{ 
+    outline:none; 
+    border:none; 
+}
+
+.nav-icon{
+    top: 5%;
+    /* left: 95%; */
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    transition: 0.5s;
+    border-radius: 50%;
+}
+
+.nav-icon:hover{
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 0px 15px;
+    transition: 0.5s;
+}
+
+.footer p{
+    margin-top: -10px;
+}
+
+.footer img{
+    width: 250px;
+}
+
+#p5title{
+    font-size: 50px;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
