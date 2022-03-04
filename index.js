@@ -8,6 +8,7 @@ const {v4:uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
 const Admin = require('./models/admin');
 const Statistics = require('./models/statistics');
+const Nft = require('./nft_/auth');
 
 const port = process.env.PORT || 3000;
 
@@ -40,7 +41,14 @@ app.set('view engine', 'ejs');
 
 app.get('/dashboard', async (req, res) => { 
     if(req.session.user){
-        res.render("dashboard"); 
+        Statistics.findOne({}, (err, result) => { 
+            if (err || !result) {
+                console.log(err);
+                res.render("dashboard", {data:""});
+            } else {
+                res.render("dashboard", {fpv: result.frontpageVisits, gpv: result.galleryVisits, hpv: result.holderVisits, osd: result.osDirects});
+            } 
+        })
     }else{
         res.render("login", {flag: "Session Ended"});
     }
@@ -106,8 +114,13 @@ app.get('/admin-logout', async (req, res) => {
 
 // ============== post ===================
 
-app.post('/??', async (req, res) => { 
-
+app.post('/auth-wallet', async (req, res) => { 
+    var ownership = await Nft.isOwner(req.body.wid);
+    if(ownership.isHolder){
+        res.status(200).json({success: true, url: null, message: null});
+    }else{
+        res.status(200).json({success: false, url: null, message: 'No Vibing Ascii Owned !'});
+    }
 });
 
 app.post('/admin-login-creds', async (req, res) => {    

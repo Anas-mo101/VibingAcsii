@@ -107,12 +107,18 @@
 
 
 
-.grid-container{
+.grid-container, .center-flip-card{
     display: grid;   
-    grid-template-columns: 550px 550px;
     justify-content: center;
     height: 100%;
-    /* margin: 20px auto; */
+}
+
+.grid-container{
+    grid-template-columns: 550px 500px;
+}
+
+.center-flip-card{
+    grid-template-columns: 550px;
 }
 
 .model{

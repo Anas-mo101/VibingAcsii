@@ -19,10 +19,37 @@
     <div class="adminin">
         <h1>Vibing Acsii Club</h1>
         <p> Only the Vibing Acsii owners are granted access </p>
-        <h5 style="color: red;"> <%= locals.flag ? flag : '' %> </h5>
+        <h5 id="flag-status" style="color: red;"> <%= locals.flag ? flag : '' %> </h5>
         <div id="holderin">
-            Connect Wallet
+           Connect Metamask Wallet 
         </div>
     </div>
 </body>
+    <script>
+        document.getElementById('holderin').addEventListener('click', () => {
+            if (typeof window.ethereum !== 'undefined') {
+                auth();
+            }else{
+                document.getElementById('flag-status').innerHTML = 'Metamask Not Available';
+            }
+        })
+        async function auth() {
+            const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+            .catch((e) => {
+                console.error(e);
+                return;
+            })
+            fetch('http://localhost:3000/auth-wallet', {method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ wid: accounts[0] }),})
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.pathname = data.url;
+                } else {
+                    document.getElementById('flag-status').textContent = data.message
+                }
+            })
+            .catch((error) => console.log('Error:', error));
+        }
+    </script>
 </html>
