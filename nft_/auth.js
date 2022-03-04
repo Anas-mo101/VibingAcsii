@@ -1,7 +1,7 @@
 fetch = require("node-fetch");
 
 const PORTKEY = 'c2eba553-c6cc-41ed-a279-7d54ccbd8b62';
-const CONTRACT = '';
+const CONTRACT = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
 
 const isOwner = async (wid) =>{
     let nftsOwned = [];
