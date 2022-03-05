@@ -8,7 +8,9 @@ const {v4:uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
 const Admin = require('./models/admin');
 const Statistics = require('./models/statistics');
+const VaNft = require('./models/nft-col');
 const Nft = require('./nft_/auth');
+// const Moralis = require('./nft_/moralis');
 
 const port = process.env.PORT || 3000;
 
@@ -84,6 +86,17 @@ app.get('/gallery', async (req, res) => {
     res.render("gallery"); 
 });
 
+app.get('/gallery-collection', async (req, res) => {
+    VaNft.find({}, (err, result) => { 
+        if (err || !result) {
+            console.log(err);
+            res.status(500).json({})
+        } else {
+            res.status(200).json(result)
+        } 
+    })
+});
+
 app.get('/login', async (req, res) => { 
     res.render("login"); 
 });
@@ -115,7 +128,7 @@ app.get('/admin-logout', async (req, res) => {
 // ============== post ===================
 
 app.post('/auth-wallet', async (req, res) => { 
-    var ownership = await Nft.isOwner(req.body.wid);
+    const ownership = await Nft.isOwner(req.body.wid);
     if(ownership.isHolder){
         res.status(200).json({success: true, url: null, message: null});
     }else{
@@ -128,7 +141,7 @@ app.post('/admin-login-creds', async (req, res) => {
         email: req.body.email
     }, (err, result) => {
         if(result && !err){
-            var temp = bcrypt.compareSync(req.body.pass,result.password);
+            const temp = bcrypt.compareSync(req.body.pass,result.password);
             if(temp){
                 req.session.user = result.id;
                 res.redirect("dashboard");
@@ -160,3 +173,14 @@ app.post('/admin-login-creds', async (req, res) => {
 //     osDirects: 0,
 // });
 // statistics.save()
+
+
+// const va = new VaNft({
+//     name: 'On Some Other Level',
+//     desc: "You just leveled up",
+//     image:'onthelevevl.png',
+//     url:'https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/75876625577037056561078655283912763371900539884597186659402012268505581223937',
+//     price:'--',
+//     sold: false
+// });
+// va.save();

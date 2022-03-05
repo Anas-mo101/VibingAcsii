@@ -105,82 +105,10 @@
             <input type="radio" name="testimonial" id="t-3" checked />
             <input type="radio" name="testimonial" id="t-4" />
             <input type="radio" name="testimonial" id="t-5" />
-            <div class="testimonials mb-8">
-              <label class="item" for="t-1">
-                <div class="mycard">
-                  <div>
-                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-                  </div>
-                  <div>
-                    <p class="cardtitle">Name</p>
-                    <p class="carddescription">Description</p>
-                    <div class="pricing">
-                      <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                      <p class="cardprice"> price </p>
-                    </div>
-                  </div>
-                </div>
-              </label>
-              <label class="item" for="t-2">
-                <div class="mycard">
-                  <div>
-                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-                  </div>
-                  <div>
-                    <p class="cardtitle">Name</p>
-                    <p class="carddescription">Description</p>
-                    <div class="pricing">
-                      <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                      <p class="cardprice"> price </p>
-                    </div>
-                  </div>
-                </div>
-              </label>
-              <label class="item" for="t-3">
-                <div class="mycard">
-                  <div>
-                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-                  </div>
-                  <div>
-                    <p class="cardtitle">Name</p>
-                    <p class="carddescription">Description</p>
-                    <div class="pricing">
-                      <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                      <p class="cardprice"> price </p>
-                    </div>
-                  </div>
-                </div>
-              </label>
-              <label class="item" for="t-4">
-                <div class="mycard">
-                  <div>
-                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-                  </div>
-                  <div>
-                    <p class="cardtitle">Name</p>
-                    <p class="carddescription">Description</p>
-                    <div class="pricing">
-                      <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                      <p class="cardprice"> price </p>
-                    </div>
-                  </div>
-                </div>
-              </label>
-              <label class="item" for="t-5">
-                <div class="mycard">
-                  <div>
-                    <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-                  </div>
-                  <div>
-                    <p class="cardtitle">Name</p>
-                    <p class="carddescription">Description</p>
-                    <div class="pricing">
-                      <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                      <p class="cardprice"> price </p>
-                    </div>
-                  </div>
-                </div>
-              </label>
+            <div class="testimonials mb-8" id="rand-slide">
+
+              
+
             </div>
               
             <div class="dots">
@@ -227,6 +155,42 @@
       <p>2022 &#169; Anmo Developement</p>
     </div>
 </body>
+
+  <script>
+    fetch('http://localhost:3000/gallery-collection')
+    .then(response => response.json())
+    .then(data => {
+      for(let i = 1; i <= 5; i++){
+        let r = getRandomInt(0, 44);
+        let x = `        
+        <label class="item" for="t-${i}">
+          <div class="mycard">
+            <div>
+              <img src="media/thumbnail/${data[r].image}" alt="nivel5" class="cardimg" />
+            </div>
+            <div>
+              <a href="${data[r].url}"> <p class="cardtitle">${data[r].name}</p> </a> 
+              <p class="carddescription">${data[r].desc}</p>
+              <div class="pricing">
+                <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+                <p class="cardprice"> ${data[r].price} </p>
+              </div>
+            </div>
+          </div>
+        </label>`
+        document.getElementById('rand-slide').innerHTML = document.getElementById('rand-slide').innerHTML + x; 
+      }
+    })
+    .catch((error) => console.log('Error:', error));
+
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    } 
+  </script>
+
+
 </html>
 
 

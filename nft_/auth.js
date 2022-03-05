@@ -5,7 +5,7 @@ const CONTRACT = '0x495f947276749Ce646f68AC8c248420045cb7b5e';
 
 const isOwner = async (wid) =>{
     let nftsOwned = [];
-    let url = `https://api.nftport.xyz/v0/accounts/${wid}?chain=ethereum`;
+    const url = `https://api.nftport.xyz/v0/accounts/${wid}?chain=ethereum`;
 
     let options = {
         method: 'GET',

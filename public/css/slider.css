@@ -17,9 +17,12 @@
     height: auto;
 }
 
-.carddescription {
+.carddescription { 
     --tw-text-opacity: 1;
     text-align: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    padding: 0 10px;
 }
   
 .slider-container {

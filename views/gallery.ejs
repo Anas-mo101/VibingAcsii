@@ -27,137 +27,7 @@
         <div id="lineCanvas"> </div>
     </div>
       
-    <section class="gallery grid-container" >
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
-
-
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
-
-
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
-
-
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="https://i.pravatar.cc/200" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">Name</p>
-                <p class="carddescription">Description</p>
-                <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> price </p>
-                </div>
-              </div>
-            </div>
-        </div>
+    <section class="gallery grid-container" id="gallery-section">
 
     </section>
 
@@ -171,4 +41,30 @@
     </div>
     
 </body>
+  <script>
+    fetch('http://localhost:3000/gallery-collection')
+    .then(response => response.json())
+    .then(data => {
+      for(let item of data){
+        let x = `        
+        <div class="item" onclick="window.location.href = '${item.url}' ">
+            <div class="mycard">
+              <div>
+                <img src="/media/thumbnail/${item.image}" alt="nivel5" class="cardimg" />
+              </div>
+              <div>
+                <p class="cardtitle">${item.name}</p>
+                <p class="carddescription">${item.desc}</p>
+                <div class="pricing">
+                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+                  <p class="cardprice"> ${item.price} </p>
+                </div>
+              </div>
+            </div>
+        </div>`
+        document.getElementById('gallery-section').innerHTML = document.getElementById('gallery-section').innerHTML + x; 
+      }
+    })
+    .catch((error) => console.log('Error:', error));
+  </script>
 </html>
