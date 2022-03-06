@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="media/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/gallery.css">
-    <script defer src="js/banner.js"></script>
+    <link rel="icon" href="/public/media/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/gallery.css">
+    <script defer src="/public/js/banner.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
     <title>Gallery</title>
 </head>
@@ -22,7 +22,7 @@
     <div id="banner">
         <h1 id="p5title" style="left: 50%;"> Vibing Ascii <br> Collection </h1>
         <a href="https://opensea.io/collection/vibing-ascii">
-          <img class="os-logo" src="media/Logomark-Transparent White.png" href="https://opensea.io/collection/vibing-ascii" alt="">
+          <img class="os-logo" src="/public/media/Logomark-Transparent White.png" href="https://opensea.io/collection/vibing-ascii" alt="">
         </a>
         <div id="lineCanvas"> </div>
     </div>
@@ -36,7 +36,7 @@
     </section>
 
     <div class="footer">
-        <img src="media/hand.jpg" alt="" srcset="">
+        <img src="/public/media/hand.jpg" alt="" srcset="">
         <p>2022 &#169; Anmo Developement</p>
     </div>
     
@@ -50,13 +50,13 @@
         <div class="item" onclick="window.location.href = '${item.url}' ">
             <div class="mycard">
               <div>
-                <img src="/media/thumbnail/${item.image}" alt="nivel5" class="cardimg" />
+                <img src="/public/media/thumbnail/${item.image}" alt="nivel5" class="cardimg" />
               </div>
               <div>
                 <p class="cardtitle">${item.name}</p>
                 <p class="carddescription">${item.desc}</p>
                 <div class="pricing">
-                  <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+                  <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
                   <p class="cardprice"> ${item.price} </p>
                 </div>
               </div>

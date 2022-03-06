@@ -3,7 +3,15 @@
     display: grid;   
     grid-template-columns: 330px 330px 330px 330px;
     justify-content: center;
-    justify-items: center;
+    justify-items: center; 
+    height: 100%;
+}
+
+.grid-container-3{
+    display: grid;   
+    grid-template-columns: 300px 300px 300px;
+    justify-content: center;
+    justify-items: center; 
     height: 100%;
 }
 

@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="media/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/home.css">
-    <script defer src="js/banner.js"></script>
+    <link rel="icon" href="/public/media/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/home.css">
+    <script defer src="/public/js/banner.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.116.1/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.122.0/examples/js/loaders/GLTFLoader.js"> </script>
-    <script defer src="js/threeModel.js"></script>
+    <script defer src="/public/js/threeModel.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
-    <link rel="stylesheet" href="css/slider.css">
+    <link rel="stylesheet" href="/public/css/slider.css">
     <title>Vibing Ascii</title>
 </head>
 <body>
@@ -151,7 +151,7 @@
     <div style="padding: 50px 0;"></div>
   
     <div class="footer">
-      <img src="media/hand.jpg" alt="" srcset="">
+      <img src="/public/media/hand.jpg" alt="" srcset="">
       <p>2022 &#169; Anmo Developement</p>
     </div>
 </body>
@@ -166,13 +166,13 @@
         <label class="item" for="t-${i}">
           <div class="mycard">
             <div>
-              <img src="media/thumbnail/${data[r].image}" alt="nivel5" class="cardimg" />
+              <img src="/public/media/thumbnail/${data[r].image}" alt="nivel5" class="cardimg" />
             </div>
             <div>
               <a href="${data[r].url}"> <p class="cardtitle">${data[r].name}</p> </a> 
               <p class="carddescription">${data[r].desc}</p>
               <div class="pricing">
-                <img src="media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+                <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
                 <p class="cardprice"> ${data[r].price} </p>
               </div>
             </div>

@@ -48,7 +48,7 @@ class Model {
     }
 
     const loader = new THREE.GLTFLoader();
-    loader.setPath('../media/');
+    loader.setPath('../public/media/');
     loader.load(this.modelfile, (gltf) => {
       gltf.scene.traverse(c => {
         c.castShadow = false;

@@ -32,10 +32,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(express.static('public'));
-app.use("/css" , express.static(__dirname + "public/css"));
-app.use("/js" , express.static(__dirname + "public/js"));
-app.use("/media" , express.static(__dirname + "public/media"));
+app.use('/public', express.static('public'));
 app.set('views', "./views");
 app.set('view engine', 'ejs');
 
@@ -43,14 +40,26 @@ app.set('view engine', 'ejs');
 
 app.get('/dashboard', async (req, res) => { 
     if(req.session.user){
-        Statistics.findOne({}, (err, result) => { 
-            if (err || !result) {
-                console.log(err);
-                res.render("dashboard", {data:""});
-            } else {
-                res.render("dashboard", {fpv: result.frontpageVisits, gpv: result.galleryVisits, hpv: result.holderVisits, osd: result.osDirects});
-            } 
-        })
+        if(req.body.panel = "monitor"){
+            Statistics.findOne({}, (err, result) => { 
+                if (err || !result) {
+                    console.log(err);
+                    res.render("dashboard", {option: req.query.panel, fpv: "", gpv: "", hpv: "", osd: ""});
+                } else {
+                    res.render("dashboard", {option: req.query.panel,fpv: result.frontpageVisits, gpv: result.galleryVisits, hpv: result.holderVisits, osd: result.osDirects});
+                } 
+            })
+        }else if(req.body.panel = "edit"){
+            res.render("dashboard", {option: req.query.panel});
+        }
+    }else{
+        res.render("login", {flag: "Session Ended"});
+    }
+});
+
+app.post('/panel', async (req, res) => { 
+    if(req.session.user){
+        res.redirect('dashboard/?panel=' + req.body.panel);
     }else{
         res.render("login", {flag: "Session Ended"});
     }

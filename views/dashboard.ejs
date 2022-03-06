@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="media/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-    <script defer src="js/banner.js"></script>
+    <link rel="icon" href="/public/media/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/dashboard.css">
+    <script defer src="/public/js/banner.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+    <link rel="stylesheet" href="/public/css/gallery.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Dashboard</title>
 </head>
 <body>
@@ -22,42 +24,73 @@
     <div id="banner">
         <h1 id="p5title" style="left: 48%;"> Dashboard </h1>
         <div id="lineCanvas"> </div>
-      </div>
-    <section>
-        <div class="grid-container-4">
-            <div class="statistics">
-                <div class="stat-name">
-                    <h2> Frontpage Visits </h2>
+    </div>
+
+    <section class="grid-container-2">
+
+        <div class="admin-panel">
+            <div class="panel-option" onclick="post('/panel', 'monitor')">
+                <div class="panel-option-icon">
+                    <i class="bi bi-display-fill"></i>
                 </div>
-                <div class="stat-num">
-                    <div class="stat" id="FPV"> <%- fpv %> </div>
+                <div class="panel-option-name">  
+                    <div class="panel-option-text">
+                        Monitor
+                    </div> 
+                </div> 
+            </div>  
+            <div class="panel-option" onclick="post('/panel', 'edit')"> 
+                <div class="panel-option-icon" >
+                    <i class="bi bi-pen-fill"></i>
                 </div>
+                <div class="panel-option-name">
+                    <div class="panel-option-text">
+                        Edit NFT
+                    </div> 
+                </div> 
+            </div>  
+            <div class="panel-option"> 
+                <div class="panel-option-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="panel-option-name">
+                    <div class="panel-option-text">
+                        Social
+                    </div> 
+                </div> 
             </div>
-            <div class="statistics">
-                <div class="stat-name">
-                    <h2> Gallery Visits </h2>
+            <div class="panel-option" > 
+                <div class="panel-option-icon"> 
+                    <i class="bi bi-gear-fill"></i>
                 </div>
-                <div class="stat-num">
-                    <div class="stat" id="GPV"> <%- gpv %> </div>
-                </div>
+                <div class="panel-option-name">
+                    <div class="panel-option-text">
+                        Settings
+                    </div> 
+                </div> 
             </div>
-            <div class="statistics">
-                <div class="stat-name">
-                    <h2> Holders Page Visits </h2>
+            <div class="panel-option" > 
+                <div class="panel-option-icon">
+                    <i class="bi bi-plus-circle"></i>
                 </div>
-                <div class="stat-num">
-                    <div class="stat" id="HPV"> <%- hpv %> </div>
-                </div>
-            </div>
-            <div class="statistics">
-                <div class="stat-name">
-                    <h2> Openseas Directs </h2>
-                </div>
-                <div class="stat-num">
-                    <div class="stat" id="OSD"> <%- osd %> </div>
-                </div>
+                <div class="panel-option-text">
+                    Add
+                </div> 
             </div>
         </div>
+
+        
+        <% if (option == "monitor") { %>
+
+            <%- include('./dashborad-views/monitor'); %>
+
+        <%} else if (option == "edit") { %>
+
+            <%- include('./dashborad-views/edit'); %>
+
+        <% } %>
+        
+
     </section>
 
     <section>
@@ -65,9 +98,40 @@
     </section>
 
     <div class="footer">
-        <img src="media/hand.jpg" alt="" srcset="">
+        <img src="/public/media/hand.jpg" alt="" srcset="">
         <p>2022 &#169; Anmo Developement</p>
     </div>
 </body>
+
+    <script>
+        // for(let x of document.getElementsByClassName("panel-option")){
+        //     x.addEventListener('click', (e) => {
+        //         console.log(e.target.getAttribute("id"));
+        //         setPanel(e.target.getAttribute("id"));
+        //     })
+        // }
+        
+
+        // function setPanel(setView) {
+        //     fetch(`http://localhost:3000/dashboard-panel/${setView}`)
+        //     .catch((error) => console.log('Error:', error));
+        // }
+
+        function post(path, params) {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = path;
+
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = 'panel';
+            hiddenField.value = params;
+            form.appendChild(hiddenField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+    </script>
     
 </html>
