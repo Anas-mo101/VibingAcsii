@@ -1,17 +1,8 @@
-.grid-container-2{
+.grid-container-two{ 
     padding: 0 20px;
     display: grid;
     grid-template-columns: 250px auto;
     justify-items: center;
-    height: 100%;
-}
-
-.grid-container-2-2{
-    display: grid;
-    grid-template-columns: 300px 300px 300px;
-    justify-content: center;
-    justify-items: center;
-    margin: 20px 0; 
     height: 100%;
 }
 
@@ -29,6 +20,7 @@
 
 .stat-name h2{
     margin-top: 40px;
+    font-size: 25px;
 }
 
 .stat-num{
@@ -38,40 +30,3 @@
     left: 50%;
     transform: translate(-50%, 50%);
 }
-
-.admin-panel{
-    border-radius: 5px;
-    background-color: rgb(255, 255, 255,0.1);
-    width: 250px;
-    height: auto;
-}
-
-.panel-option{
-    display: flex;
-    cursor: pointer;
-    color: black;
-    width: auto;
-    height: 30px;
-    padding: 20px 20px;
-    margin: 5px 5px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 5px;
-    transition: 0.5s;
-}
-
-.panel-option:hover{
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    transition: 0.5s;
-}
-
-.panel-option-text{
-    margin: 0 20px;
-    transition: 0.5s;
-}
-
-.panel-option-text:hover{
-    transform: translate(0, -10px);
-    transition: 0.5s;
-}
-
-

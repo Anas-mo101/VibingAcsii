@@ -1,11 +1,11 @@
 
-.grid-container{
+/* .grid-container{
     display: grid;   
     grid-template-columns: 330px 330px 330px 330px;
     justify-content: center;
     justify-items: center; 
-    height: 100%;
-}
+    height: 100%; 
+} */
 
 .grid-container-3{
     display: grid;   

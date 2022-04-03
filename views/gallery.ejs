@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/public/media/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/public/css/style.css">
+<%- include('components/header'); %>
+
     <link rel="stylesheet" href="/public/css/gallery.css">
     <script defer src="/public/js/banner.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
@@ -13,58 +7,46 @@
 </head>
 <body>
 
-    <div class="nav-icon" id="back" onclick="window.location.href = '/';"> 
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16" style="margin-top: 17px; ">
-            <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-        </svg> 
+    <div class="nav-icon flex justify-center items-center" style="left: 1%;"> 
+      <a href="./"> <i class="bi bi-arrow-return-left"> </i></a>
     </div>
 
     <div id="banner">
-        <h1 id="p5title" style="left: 50%;"> Vibing Ascii <br> Collection </h1>
+      <h1 id="p5title" style="left: 50%;"> Vibing Ascii <br> Collection </h1>
         <a href="https://opensea.io/collection/vibing-ascii">
           <img class="os-logo" src="/public/media/Logomark-Transparent White.png" href="https://opensea.io/collection/vibing-ascii" alt="">
         </a>
-        <div id="lineCanvas"> </div>
+      <div id="lineCanvas"> </div>
     </div>
       
-    <section class="gallery grid-container" id="gallery-section">
+    <section class="grid grid-cols-4 gap-4 justify-center justify-items-center h-full" id="gallery-section">
 
-    </section>
-
-    <section>
-      <a href="https://opensea.io/collection/vibing-ascii" title="Buy on OpenSea" target="_blank"><img style="width:220px; border-radius:5px; box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);" src="https://storage.googleapis.com/opensea-static/Logomark/Badge%20-%20Available%20On%20-%20BW.png" alt="Available on OpenSea" /></a>
-    </section>
-
-    <div class="footer">
-        <img src="/public/media/hand.jpg" alt="" srcset="">
-        <p>2022 &#169; Anmo Developement</p>
-    </div>
-    
-</body>
-  <script>
-    fetch('http://localhost:3000/gallery-collection')
-    .then(response => response.json())
-    .then(data => {
-      for(let item of data){
-        let x = `        
-        <div class="item" onclick="window.location.href = '${item.url}' ">
-            <div class="mycard">
-              <div>
-                <img src="/public/media/thumbnail/${item.image}" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle">${item.name}</p>
-                <p class="carddescription">${item.desc}</p>
-                <div class="pricing">
-                  <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> ${item.price} </p>
-                </div>
+      <% for(var item of data) {%> 
+        <div class="item" onclick="window.location.href = '<%= item.permalink %>' ">
+          <div class="mycard">
+            <div>
+              <img src="<%= item.image_thumbnail_url%>" alt="nivel5" class="cardimg" />
+            </div>
+            <div>
+              <p class="cardtitle"><%= item.name %></p>
+              <p class="carddescription"> <%= item.description %> </p>
+              <div class="pricing">
+                <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+                <p class="cardprice"> -- </p>
               </div>
             </div>
-        </div>`
-        document.getElementById('gallery-section').innerHTML = document.getElementById('gallery-section').innerHTML + x; 
-      }
-    })
-    .catch((error) => console.log('Error:', error));
-  </script>
+          </div>
+        </div>
+      <% } %>
+
+    </section>
+
+    <section class="hero container max-w-screen-lg mx-auto pb-10">
+      <a href="https://opensea.io/collection/vibing-ascii" title="Buy on OpenSea" target="_blank">
+        <img class="mx-auto" style="width:220px; border-radius:5px; box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.25);" src="https://storage.googleapis.com/opensea-static/Logomark/Badge%20-%20Available%20On%20-%20BW.png" alt="Available on OpenSea"/>
+      </a>
+    </section>
+
+    <%- include('components/footer'); %>
+</body>
 </html>

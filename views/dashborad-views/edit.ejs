@@ -1,82 +1,31 @@
 
-<section class="gallery grid-container-3" id="gallery-section">
-
+<section class="gallery grid-container-3 " id="gallery-section">
+  <% for(var item of data) {%>
+    <div class="item">
+      <div class="mycard">
+        <div>
+          <img src="<%= item.image_thumbnail_url%>" alt="nivel5" class="cardimg" />
+        </div>
+        <div>
+          <p class="cardtitle" onclick="window.location.href = '<%= item.permalink %>' "><%= item.name %></p>
+          <p class="carddescription"> <%= item.description %> </p>
+          <div class="pricing">
+            <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+            <p class="cardprice"> -- </p>
+          </div>
+        </div>
+        <div style='margin: 10px 0;' id='ed-<%= item.name %>' class='edit-item'> Edit </div>
+        <div class="edit-form" id='ed<%= item.name %>' style="display: none;"> 
+          <form class="box" action="/update/<%= item.name %>" method="POST" enctype="multipart/form-data">
+              <input type="checkbox" name="sold" value="available">
+              <label for="available"> Sold </label><br>
+              <input type="text" name="name" placeholder="new  name" value="<%= item.name %>" required>
+              <input type="text" name="desc" placeholder="new description" value="<%= item.description %>" >
+              <input type="number" step="0.001" name="price" placeholder="new price" value="--" required>
+              <input type="submit" name="" value="update">
+          </form>
+        </div>
+      </div>
+    </div>
+  <% } %>
 </section>
-
-<script>
-    fetch('http://localhost:3000/gallery-collection')
-    .then(response => response.json())
-    .then(data => {
-      for(let item of data){
-        let x = `        
-        <div class="item">
-            <div class="mycard">
-              <div>
-                <img src="/public/media/thumbnail/${item.image}" alt="nivel5" class="cardimg" />
-              </div>
-              <div>
-                <p class="cardtitle" onclick="window.location.href = '${item.url}' ">${item.name}</p>
-                <p class="carddescription">${item.desc}</p>
-                <div class="pricing">
-                  <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                  <p class="cardprice"> ${item.price} </p>
-                </div>
-              </div>
-              <div style='margin: 10px 0;' id='edit-${item.name}' class='edit-item'> Edit </div>
-              <div class="edit-from" id='ed${item.name}' style="display: none;"> 
-                <form class="box" action="/update/${item.name}" method="POST" enctype="multipart/form-data">
-                    <input type="checkbox" name="sold" value="available">
-                    <label for="available"> Sold </label><br>
-                    <input type="text" name="name" placeholder="new  name" value="${item.name}" required>
-                    <input type="text" name="desc" placeholder="new description" value="${item.desc}" >
-                    <input type="number" step="0.001" name="price" placeholder="new price" value="${item.price}" required>
-                    <input type="submit" name="" value="update">
-                </form>
-              </div>
-            </div>
-        </div>`
-        document.getElementById('gallery-section').innerHTML = document.getElementById('gallery-section').innerHTML + x; 
-      }
-    })
-    .catch((error) => console.log('Error:', error));
-
-
-    for(let option of document.getElementsByClassName("edit-item")){
-        option.addEventListener('click', (e) => {
-    
-            for (const element of document.getElementsByClassName("edit-form")){
-                if(element.style.display != "none"){
-                    element.style.display="none";
-                }
-            }
-            var tar = e.target.innerHTML;
-
-            // if(tar.trim() == "Update item"){
-                // var tempp = document.getElementById("delete-" + option.getAttribute("id").slice(2) );
-                // if(tempp.style.display == "block"){
-                //     tempp.style.display = "none";
-                // }
-    
-                var temp = document.getElementById("ed-" + option.getAttribute("id").slice(2) );
-                if(temp.style.display != "block"){
-                    temp.style.display = "block";
-                }else{
-                    temp.style.display = "none";
-                }
-            // }else if(tar.trim() == "Delete"){
-    
-            //     var tempp = document.getElementById("update-" + option.getAttribute("id").slice(3) );
-            //     if(tempp.style.display != "none"){
-            //         tempp.style.display = "none";
-            //     }
-            //     var temp = document.getElementById("delete-" + option.getAttribute("id").slice(3) );
-            //     if(temp.style.display != "block"){
-            //         temp.style.display = "block";
-            //     }else{
-            //         temp.style.display = "none";
-            //     }
-            // }
-        });
-    }
-
-  </script>

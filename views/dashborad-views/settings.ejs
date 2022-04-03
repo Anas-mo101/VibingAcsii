@@ -1,0 +1,15 @@
+<div>
+    <h1 class="my-5 text-2xl">Settings</h1>
+    <div class="">
+        <div class="grid grid-cols-2 gap-4 "> 
+            <div class="my-auto">
+                Maintainance Mode
+            </div>
+            <form action="/maint-mode-switch/<%- mms %>" action="POST">
+                <button type="submit" formmethod="post" class="my-2 text-white text-center rounded-xl border-2 border-white py-1.5 px-6 duration-300 cursor-pointer hover:bg-white hover:text-black">
+                    <%- mms %>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

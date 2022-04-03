@@ -29,6 +29,11 @@ const adminSchema = new ASchema({
         type: String,
         required: true,
     },
+    maintainance:
+    {
+        type: Boolean,
+        required: true,
+    },
 }, {timestamps: true});
 
 

@@ -1,137 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/public/media/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/public/css/style.css">
+<%- include('components/header'); %>
+
     <link rel="stylesheet" href="/public/css/dashboard.css">
     <script defer src="/public/js/banner.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
     <link rel="stylesheet" href="/public/css/gallery.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Dashboard</title>
 </head>
 <body>
-    <div class="nav-icon" style="left: 1%;" id="back" onclick="window.location.href = '/admin-logout';"> 
-        <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 16px; margin-right: 6px;" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 15 15">
-          <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-          <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-        </svg>
-      </div>
+
+    <div class="nav-icon flex justify-center items-center" style="left: 1%;"> 
+        <a href="/admin-logout"><i class="bi bi-box-arrow-left"></i></a>
+    </div>
 
     <div id="banner">
         <h1 id="p5title" style="left: 48%;"> Dashboard </h1>
         <div id="lineCanvas"> </div>
     </div>
 
-    <section class="grid-container-2">
-
-        <div class="admin-panel">
-            <div class="panel-option" onclick="post('/panel', 'monitor')">
+    <section class="grid-container-two"> 
+        <div class="rounded-md bg-white/10 w-64 h-auto ">
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'monitor')">
                 <div class="panel-option-icon">
                     <i class="bi bi-display-fill"></i>
                 </div>
                 <div class="panel-option-name">  
-                    <div class="panel-option-text">
+                    <div class="mx-5 duration-500 hover:-translate-y-2.5">
                         Monitor
                     </div> 
                 </div> 
             </div>  
-            <div class="panel-option" onclick="post('/panel', 'edit')"> 
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'edit')"> 
                 <div class="panel-option-icon" >
                     <i class="bi bi-pen-fill"></i>
                 </div>
                 <div class="panel-option-name">
-                    <div class="panel-option-text">
-                        Edit NFT
+                    <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                        NFTs Status
                     </div> 
                 </div> 
             </div>  
-            <div class="panel-option"> 
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30"> 
                 <div class="panel-option-icon">
                     <i class="bi bi-people-fill"></i>
                 </div>
                 <div class="panel-option-name">
-                    <div class="panel-option-text">
-                        Social
+                    <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                        Owners
                     </div> 
                 </div> 
             </div>
-            <div class="panel-option" > 
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'settings')"> 
                 <div class="panel-option-icon"> 
                     <i class="bi bi-gear-fill"></i>
                 </div>
                 <div class="panel-option-name">
-                    <div class="panel-option-text">
+                    <div class="mx-5 duration-500 hover:-translate-y-2.5">
                         Settings
                     </div> 
                 </div> 
             </div>
-            <div class="panel-option" > 
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" > 
                 <div class="panel-option-icon">
                     <i class="bi bi-plus-circle"></i>
                 </div>
-                <div class="panel-option-text">
+                <div class="mx-5 duration-500 hover:-translate-y-2.5">
                     Add
                 </div> 
             </div>
         </div>
 
-        
-        <% if (option == "monitor") { %>
 
-            <%- include('./dashborad-views/monitor'); %>
+        <div>
+            <% if (option == "monitor") { %> 
 
-        <%} else if (option == "edit") { %>
+                <%- include('./dashborad-views/monitor'); %>
+    
+            <%} else if (option == "edit") { %>
+    
+                <%- include('./dashborad-views/edit', {data:[]}); %>
+    
+            <%} else if (option == "settings") { %>
+    
+                <%- include('./dashborad-views/settings', {mms}); %>
 
-            <%- include('./dashborad-views/edit'); %>
+            <%} else { %>
 
-        <% } %>
-        
+                <h1 class="my-5 text-2xl">Welcome, Boss</h1>
 
+            <% } %>
+        </div>
     </section>
-
-    <section>
-
-    </section>
-
-    <div class="footer">
-        <img src="/public/media/hand.jpg" alt="" srcset="">
-        <p>2022 &#169; Anmo Developement</p>
-    </div>
+    <%- include('components/footer'); %>
 </body>
-
     <script>
-        // for(let x of document.getElementsByClassName("panel-option")){
-        //     x.addEventListener('click', (e) => {
-        //         console.log(e.target.getAttribute("id"));
-        //         setPanel(e.target.getAttribute("id"));
-        //     })
-        // }
-        
-
-        // function setPanel(setView) {
-        //     fetch(`http://localhost:3000/dashboard-panel/${setView}`)
-        //     .catch((error) => console.log('Error:', error));
-        // }
-
         function post(path, params) {
             const form = document.createElement('form');
             form.method = 'post';
             form.action = path;
-
             const hiddenField = document.createElement('input');
             hiddenField.type = 'hidden';
             hiddenField.name = 'panel';
             hiddenField.value = params;
             form.appendChild(hiddenField);
-
             document.body.appendChild(form);
             form.submit();
         }
-
     </script>
-    
 </html>

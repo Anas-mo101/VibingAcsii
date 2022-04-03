@@ -1,4 +1,4 @@
-const S = 500
+const S = 620
 
 let dt = 0
 

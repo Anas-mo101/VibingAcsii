@@ -1,29 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/login.css">
-    <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="icon" href="/public/media/favicon.png" type="image/x-icon">
+<%- include('components/header'); %>
+
     <title>VA Club</title>
 </head>
 <body>
-    <div class="nav-icon" style="left:1%;" onclick="window.location.href = '/';"> 
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16" style="margin-top: 17px; ">
-            <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-        </svg> 
+
+    <div class="nav-icon flex justify-center items-center" style="left: 1%;"> 
+        <a href="./"><i class="bi bi-arrow-return-left"></i></a>
     </div>
 
-    <div class="adminin">
-        <h1>Vibing Acsii Club</h1>
-        <p> Only the Vibing Acsii owners are granted access </p>
-        <h5 id="flag-status" style="color: red;"> <%= locals.flag ? flag : '' %> </h5>
-        <div id="holderin">
-           Connect Metamask Wallet 
+    <div class="flex h-screen justify-center items-center">
+        <div class="w-auto">
+            <h1 class="my-5 text-2xl font-semibold">Vibing Acsii Club</h1>
+            <p> Only Vibing Acsii owners are granted access </p>
+            <h5 id="flag-status" style="color: red;"> <%= locals.flag ? flag : '' %> </h5>
+            <div id="holderin" class="my-5 text-white text-center rounded-lg border-2 border-white py-2.5 px-6 duration-300 cursor-pointer hover:bg-white hover:text-black">
+               Connect Metamask Wallet 
+            </div>
         </div>
     </div>
+      
+
 </body>
     <script>
         document.getElementById('holderin').addEventListener('click', () => {

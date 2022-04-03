@@ -1,5 +1,4 @@
 class Model {
-
   constructor(modelfile, location, flag = false) { 
     this.modelfile = modelfile
     this.location = location

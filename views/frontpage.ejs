@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/public/media/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="/public/css/style.css">
+    <%- include('components/header'); %>
+
     <link rel="stylesheet" href="/public/css/home.css">
     <script defer src="/public/js/banner.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.js"></script>
@@ -17,46 +11,42 @@
     <title>Vibing Ascii</title>
 </head>
 <body>
-    <div id="banner">
-      <h1 id="p5title" style="left: 52%;"> Vibing Ascii </h1>
+
+    <div class="flex h-screen justify-center items-center">
+      <h1 class="text-5xl absolute"> Vibing Ascii </h1>
       <div id="lineCanvas"> </div>
     </div>
 
-    <div class="nav-icon" id="go" onclick="window.location.href = '/holders' "> 
-      <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 17px;" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-      </svg>
+    <div class="nav-icon flex justify-center items-center" style="right: 1%;"> 
+      <a href="./holders"><i class="bi bi-three-dots-vertical"></i></a>
     </div>
 
     <section>
-        <div class="col-left">
+      <div class="flex">
+          <div class="bg-black w-1/2 hover:w-3/4 duration-1000" style="height: 620px;">
+            <div class="absolute" style="top: 650px; left: 5%;">
+              <p>XXXXXXXXXXXXXXXXXXXXX</p>
+              <p>XXXXXXXXXXXXXXXXXXXXX</p>
+              <p>XXXXXXXXXXXXXXXXXXXXX</p>
+              <p>XXXXXXXXXXXXXXXXXXXXX</p>
+              <p>XXXXXXXXXXXXXXXXXXXXX</p>
+            </div> 
+      </div>
+      <div class="bg-white w-1/2 hover:w-3/4 duration-1000" style="height: 620px;">
+          <div class="text-black absolute" style="top: 1000px; left: 75%;">
             <p>XXXXXXXXXXXXXXXXXXXXX</p>
             <p>XXXXXXXXXXXXXXXXXXXXX</p>
             <p>XXXXXXXXXXXXXXXXXXXXX</p>
             <p>XXXXXXXXXXXXXXXXXXXXX</p>
             <p>XXXXXXXXXXXXXXXXXXXXX</p>
+          </div>
         </div>
-        <div class="col-right">
-            <p>XXXXXXXXXXXXXXXXXXXXX</p>
-            <p>XXXXXXXXXXXXXXXXXXXXX</p>
-            <p>XXXXXXXXXXXXXXXXXXXXX</p>
-            <p>XXXXXXXXXXXXXXXXXXXXX</p>
-            <p>XXXXXXXXXXXXXXXXXXXXX</p>
-        </div>
-
-        <div id="sec-1-1">
-            <div id="sec-1-1-1">
-
-            </div>
-            <div id="sec-1-1-2">
-    
-            </div>
-        </div>
-      </section>
+      </div>
+  </section>
 
       <section>
-        <div class="grid-container">
-            <div class="model">
+        <div class="grid grid-cols-2">
+            <div class="my-16 text-center w-full h-full">
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
@@ -64,23 +54,21 @@
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
             </div>
             
-            <div class="model" id="3dalpha">
+            <div class="my-16 text-center w-full h-full" id="3dalpha">
                 <!-- This work is based on "Voxel Alphabet" (https://sketchfab.com/3d-models/voxel-alphabet-4f9f377bff724326a9a71b03acdd02b2) by rodrivgm (https://sketchfab.com/rodrivgm) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/) -->
             </div>
 
-            <div class="model" id="3dalpha2">
+            <div class="my-16 text-center w-full h-full" id="3dalpha2"></div>
 
+            <div class="my-16 text-center w-full h-full" id="">
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
+                <p>XXXXXXXXXXXXXXXXXXXXX</p>
             </div>
 
-            <div class="model" id="">
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-                <p>XXXXXXXXXXXXXXXXXXXXX</p>
-            </div>
-
-            <div class="model">
+            <div class="my-16 text-center w-full h-full">
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
@@ -88,9 +76,8 @@
                 <p>XXXXXXXXXXXXXXXXXXXXX</p>
             </div>
             
-            <div class="model" id="3dalpha3">
+            <div class="my-16 text-center w-full h-full" id="3dalpha3"></div>
 
-            </div>
         </div>
       </section>
 
@@ -107,7 +94,23 @@
             <input type="radio" name="testimonial" id="t-5" />
             <div class="testimonials mb-8" id="rand-slide">
 
-              
+              <% for(let [index, item] of data.entries()) {%>
+                <label class="item" for="t-<%= ++index %>">
+                  <div class="mycard">
+                    <div>
+                      <img src="<%= item.image_thumbnail_url%>" alt="nivel5" class="cardimg" />
+                    </div>
+                    <div>
+                      <p class="cardtitle"><%= item.name %></p>
+                      <p class="carddescription"> <%= item.description %> </p>
+                      <div class="pricing">
+                        <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+                        <p class="cardprice"> -- </p>
+                      </div>
+                    </div>
+                  </div>
+                </label>
+              <% } %>
 
             </div>
               
@@ -130,8 +133,9 @@
 
     <section>
       <h2>Founder</h2>
-      <div class="center-flip-card">
+      <div style="padding: 20px 0;"></div>
 
+      <div class="center-flip-card">
         <div class="flip-card">
           <div class="flip-card-inner">
               <div class="flip-card-front">
@@ -144,53 +148,14 @@
               </div>
           </div>
         </div>
-
       </div>
+      
     </section>
 
     <div style="padding: 50px 0;"></div>
   
-    <div class="footer">
-      <img src="/public/media/hand.jpg" alt="" srcset="">
-      <p>2022 &#169; Anmo Developement</p>
-    </div>
+    <%- include('components/footer'); %>
 </body>
-
-  <script>
-    fetch('http://localhost:3000/gallery-collection')
-    .then(response => response.json())
-    .then(data => {
-      for(let i = 1; i <= 5; i++){
-        let r = getRandomInt(0, 44);
-        let x = `        
-        <label class="item" for="t-${i}">
-          <div class="mycard">
-            <div>
-              <img src="/public/media/thumbnail/${data[r].image}" alt="nivel5" class="cardimg" />
-            </div>
-            <div>
-              <a href="${data[r].url}"> <p class="cardtitle">${data[r].name}</p> </a> 
-              <p class="carddescription">${data[r].desc}</p>
-              <div class="pricing">
-                <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
-                <p class="cardprice"> ${data[r].price} </p>
-              </div>
-            </div>
-          </div>
-        </label>`
-        document.getElementById('rand-slide').innerHTML = document.getElementById('rand-slide').innerHTML + x; 
-      }
-    })
-    .catch((error) => console.log('Error:', error));
-
-    function getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    } 
-  </script>
-
-
 </html>
 
 

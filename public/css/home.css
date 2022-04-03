@@ -1,38 +1,4 @@
 
-#sec-1-1{
-    display: flex;
-}
-
-#p5title{
-    font-size: 50px;
-    position: absolute;
-    margin: 0 -50px;
-}
-
-#sec-1-1-1{
-    background-color: black;
-    height: 620px;
-    width: 50%;
-    transition: 1s;
-}
-
-#sec-1-1-2{
-    background-color: white;
-    height: 620px;
-    width: 50%;
-    transition: 1s;
-}
-
-#sec-1-1-1:hover{
-    width: 70%;
-    transition: 1s;
-}
-
-#sec-1-1-2:hover{
-    width: 70%;
-    transition: 1s;
-}
-
 .flip-card {
     background-color: transparent;
     /* height: 200px; */
@@ -75,65 +41,16 @@
     transform: rotateY(180deg);
 }
 
-.col-left{
-    position: absolute;
-    top: 600px;
-    left: 5%;
-    transform: translate(-5%, -5%);
-}
-
-.col-right{
-    color: black;
-    position: absolute;
-    top: 1000px;
-    left: 95%;
-    transform: translate(-95%, -95%);
-}
-
-#go{
-    left: 95%;
-}
-
-#canvas{
-    cursor: none;
-    display: block;
-}
-
-#banner{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-
 .grid-container, .center-flip-card{
     display: grid;   
     justify-content: center;
     height: 100%;
 }
-
-.grid-container{
-    grid-template-columns: 550px 500px;
-}
-
 .center-flip-card{
     grid-template-columns: 550px;
-}
-
-.model{
-    
-    /* margin-top: 75px; */
-}
-
-.model{
-    margin: 75px auto;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-}
+} 
 
 section h2{
     text-align: center;
     font-size: 30px;
-}
+} 

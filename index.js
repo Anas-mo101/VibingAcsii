@@ -8,9 +8,11 @@ const {v4:uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
 const Admin = require('./models/admin');
 const Statistics = require('./models/statistics');
-const VaNft = require('./models/nft-col');
+// const VaNft = require('./models/nft-col');
 const Nft = require('./nft_/auth');
-// const Moralis = require('./nft_/moralis');
+const OS = require('./nft_/os-api');
+
+var maintainance_lock = false;
 
 const port = process.env.PORT || 3000;
 
@@ -36,21 +38,59 @@ app.use('/public', express.static('public'));
 app.set('views', "./views");
 app.set('view engine', 'ejs');
 
+// ================= Middleware ================
+
+const maintainanceCheck = function (req, res, next) {
+    Admin.findOne({}, (err, result) => {
+        if(result.maintainance){
+            maintainance_lock = true;
+        }else{
+            maintainance_lock = false;
+        }
+    });
+    next();
+}
+
+app.use(maintainanceCheck);
+
 // ============ get =============
 
 app.get('/dashboard', async (req, res) => { 
     if(req.session.user){
-        if(req.body.panel = "monitor"){
+
+        if(req.query.panel == "monitor"){
+
             Statistics.findOne({}, (err, result) => { 
                 if (err || !result) {
                     console.log(err);
                     res.render("dashboard", {option: req.query.panel, fpv: "", gpv: "", hpv: "", osd: ""});
                 } else {
-                    res.render("dashboard", {option: req.query.panel,fpv: result.frontpageVisits, gpv: result.galleryVisits, hpv: result.holderVisits, osd: result.osDirects});
+                    res.render("dashboard", {option: req.query.panel, fpv: result.frontpageVisits, gpv: result.galleryVisits, hpv: result.holderVisits, osd: result.osDirects});
                 } 
-            })
-        }else if(req.body.panel = "edit"){
-            res.render("dashboard", {option: req.query.panel});
+            });
+
+        }else if(req.query.panel == "edit"){
+
+            const collection = await OS.getCollection();
+            if(!Array.isArray(collection) || !collection[0]){
+                res.render("dashboard", {option: req.query.panel, data: []});
+            }else{
+                res.render("dashboard", {option: req.query.panel, data: collection});
+            }
+
+        }else if(req.query.panel == "settings"){
+
+            Admin.findOne({}, (err, result) => {
+                if (err || !result) {
+                    res.render("dashboard", {option: null});
+                } else {
+                    let value = result.maintainance ? "Off" : "On";
+                    res.render("dashboard", {option: req.query.panel, mms: value});
+                } 
+            });
+
+        }else{
+            res.render("dashboard", {option: null});
         }
     }else{
         res.render("login", {flag: "Session Ended"});
@@ -66,44 +106,76 @@ app.post('/panel', async (req, res) => {
 });
 
 app.get('/', async (req, res) => { // collect statistics
-    Statistics.updateOne({id: req.session.user},
+
+    if(maintainance_lock){
+        res.render("maintainance");
+    }else{
+        Statistics.updateOne({id: req.session.user},
         {
             $inc: { 
                 frontpageVisits: 1
             } 
         },
-    function(err, result){
-        if(err){
-            console.log("Error: " + err);
+        function(err, result){
+            if(err){
+                console.log("Error: " + err);
+            }
+        });
+    
+        const collection = await OS.getCollection();
+        if(!Array.isArray(collection) || !collection[0]){
+            res.render("frontpage", {data: []} ); 
+        }else{
+            nfts = [];
+            Array(5).fill().map(() => {
+                nfts.push(collection[ Math.floor(Math.random() * (44 - 0 + 1)) + 0])
+            })
+            res.render("frontpage", {data: nfts}); 
         }
-    });
-    res.render("frontpage"); 
+    }
 });
 
 app.get('/gallery', async (req, res) => {
-    Statistics.updateOne({id: req.session.user},
-        {
-            $inc: { 
-                galleryVisits: 1
-            } 
-        },
-    function(err, result){
-        if(err){
-            console.log("Error: " + err);
+
+    if(maintainance_lock){
+        res.render("maintainance");
+    }else{
+        Statistics.updateOne({id: req.session.user},
+            {
+                $inc: { 
+                    galleryVisits: 1
+                } 
+            },
+        function(err, result){
+            if(err){
+                console.log("Error: " + err);
+            }
+        });
+    
+        const collection = await OS.getCollection();
+        if(!Array.isArray(collection) || !collection[0]){
+            res.render("gallery", {data: []} ); 
+        }else{
+            res.render("gallery", {data: collection}); 
         }
-    });
-    res.render("gallery"); 
+    }
 });
 
 app.get('/gallery-collection', async (req, res) => {
-    VaNft.find({}, (err, result) => { 
-        if (err || !result) {
-            console.log(err);
-            res.status(500).json({})
-        } else {
-            res.status(200).json(result)
-        } 
-    })
+    // VaNft.find({}, (err, result) => { 
+    //     if (err || !result) {
+    //         console.log(err);
+    //         res.status(500).json({})
+    //     } else {
+    //         res.status(200).json(result)
+    //     } 
+    // })
+    let collection = OS.getCollection();
+    if(collection === {}){
+        res.status(500).json({})
+    }else{
+        res.status(200).json(collection.assets)
+    }
 });
 
 app.get('/login', async (req, res) => { 
@@ -111,18 +183,22 @@ app.get('/login', async (req, res) => {
 });
 
 app.get('/holders', async (req, res) => {
-    Statistics.updateOne({id: req.session.user},
-        {
-            $inc: { 
-                holderVisits: 1
-            } 
-        },
-    function(err, result){
-        if(err){
-            console.log("Error: " + err);
-        }
-    });
-    res.render("holders"); 
+    if(maintainance_lock){
+        res.render("maintainance");
+    }else{
+        Statistics.updateOne({id: req.session.user},
+            {
+                $inc: { 
+                    holderVisits: 1
+                } 
+            },
+        function(err, result){
+            if(err){
+                console.log("Error: " + err);
+            }
+        });
+        res.render("holders"); 
+    }
 });
 
 app.get('/admin-logout', async (req, res) => {    
@@ -135,6 +211,22 @@ app.get('/admin-logout', async (req, res) => {
 });
 
 // ============== post ===================
+
+app.post('/maint-mode-switch/:state', async (req, res) => { 
+    let value = req.params.state == "On" ? true : false;
+    Admin.updateOne({},
+        {
+            maintainance: value
+        },
+     function(err, result){
+        if(!err && result){
+            res.redirect('/dashboard/?panel=' + 'settings');
+        }else{
+            console.log("Error: " + err);
+            res.redirect(500,'/dashboard');
+        }
+    });
+});
 
 app.post('/auth-wallet', async (req, res) => { 
     const ownership = await Nft.isOwner(req.body.wid);
@@ -164,13 +256,14 @@ app.post('/admin-login-creds', async (req, res) => {
 });
 
 
-// // Create admin
+// Create admin
 // const admin = new Admin({
 //     id: uuidv4(),
 //     name: "anmo",
 //     restname: "mcd",
 //     email: "admin@va.com",
-//     password: "admin"
+//     password: "admin",
+//     maintainance: false
 // });
 // admin.save()
 
