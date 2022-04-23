@@ -1,0 +1,40 @@
+<div>
+  <h1 class="my-5 text-2xl">Vibing Ascii Filter Effect</h1>
+  <div id="filterInterface">
+      <div id="camfilter"></div>
+  </div>
+  <h1 class="my-2">Works best in a dark enviroment with a light source facing you.</h1>
+</div>
+
+<script src="/public/js/sketch.js"></script>
+
+<style>
+  #camfilter{
+    display: block; 
+    font-size: 12pt; 
+    line-height: 10pt;
+    border: 2px; 
+    border-style: solid;
+    border-color: white;
+    border-radius: 5px;
+    padding: 0 30px ;
+  }  
+
+  #filterInterface button{
+    margin: 10px 0;
+    color: white;
+    text-align: center;
+    border: 1px; 
+    border-style: solid;
+    border-color: white;
+    border-radius: 5px;
+    padding: 20px 40px;
+    transition: 0.5s;
+    cursor: pointer;
+  }
+
+  #filterInterface button:hover{
+    background-color: white;
+    color: black;
+  }
+</style>

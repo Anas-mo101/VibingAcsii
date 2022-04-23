@@ -1,0 +1,114 @@
+<%- include('components/header'); %>
+
+    <% if (option != "vafilter") { %> 
+        <script defer src="/public/js/banner.js"></script>
+    <% } %>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+    <link rel="stylesheet" href="/public/css/dashboard.css">
+    <link rel="stylesheet" href="/public/css/gallery.css">
+    <script defer src="/public/js/post.js"></script>
+    <title>Vibing Ascii Club</title>
+</head>
+<body>
+    <% if (first == true){ %> 
+
+        <%- include('./components/popup'); %>
+
+    <%} else { %>
+
+        <div class="nav-icon flex justify-center items-center" style="left: 1%;"> 
+            <a href="/holder-logout"><i class="bi bi-box-arrow-left"></i></a>
+        </div>
+
+        <div class="flex h-screen justify-center items-center">
+            <h1 class="text-5xl absolute"> Welcome, <%- name %> </h1>
+            <div id="lineCanvas"> </div>
+        </div>
+
+        <section class="grid-container-two"> 
+            <div class="rounded-md bg-white/10 w-64 h-auto ">
+                <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-md hover:shadow-white/30" onclick="post('/club', 'feed', 'club')">
+                    <div class="panel-option-icon">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="panel-option-name">  
+                        <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                            VA Feed
+                        </div>
+                    </div> 
+                </div>  
+                <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-md hover:shadow-white/30" onclick="post('/club', 'vacollection', 'club')"> 
+                    <div class="panel-option-icon" >
+                        <i class="bi bi-collection-fill"></i>
+                    </div>
+                    <div class="panel-option-name">
+                        <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                            VA Collection
+                        </div> 
+                    </div> 
+                </div>  
+                <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-md hover:shadow-white/30"> 
+                    <div class="panel-option-icon">
+                        <i class="bi bi-chat-fill"></i>
+                    </div>
+                    <div class="panel-option-name">
+                        <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                            Chat
+                        </div> 
+                    </div> 
+                </div>
+                <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-md hover:shadow-white/30" onclick="post('/club', 'vafilter', 'club')"> 
+                    <div class="panel-option-icon">
+                        <!-- <i class="bi bi-plus-circle"></i> -->
+                        <img src="/public/media/favicon.png" style="width: 20px;">
+                    </div>
+                    <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                        VA Filter 
+                    </div> 
+                </div>
+                <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-md hover:shadow-white/30"> 
+                    <div class="panel-option-icon"> 
+                        <i class="bi bi-gear-fill"></i>
+                    </div>
+                    <div class="panel-option-name">
+                        <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                            Settings
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+    
+            <% if (option == "vafilter") { %> 
+                <%- include('./club-views/vafilter'); %>
+            <%} else if (option == "feed") { %>
+                <%- include('./club-views/feed', {posts}); %>
+            <%} else if (option == "vacollection") { %>
+                <%- include('./club-views/vacollection', {collection}); %>
+            <%} else { %>
+                <h1 class="my-5 text-2xl">Welcome To Vibing Acsii Club</h1>
+            <% } %>
+        </section>
+
+        <div id="notification" style="display: none;" class="mx-auto sm:w-3/4 md:w-2/4 fixed inset-x-0 top-10 duration-300"> 
+            <div class="flex p-4 mb-4 text-sm text-gray-700 bg-white rounded-lg border border-black" role="alert">
+                <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                <div>
+                  <span id="notification-msg" class="font-medium"> </span> 
+                </div>
+            </div>
+        </div>
+
+        <%- include('components/footer'); %>
+    <%}%>
+</body>
+
+<script>
+    const showNotification = (msg) => {
+        document.getElementById('notification-msg').innerHTML = msg;
+        document.getElementById(`notification`).style.display = "block";
+        setTimeout(() => {document.getElementById(`notification`).style.display = "none";}, 3000);
+    }
+</script>
+
+</html>

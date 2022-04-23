@@ -1,0 +1,22 @@
+<div class="pb-2">
+    <h3 class="my-5 text-2xl"> VA Collected </h3>
+    <div class="gallery grid-container-3 h-auto">
+        <% for(var item of collection) {%>
+            <div class="item">
+              <div class="mycard">
+                <div>
+                  <img src="<%= item.image_thumbnail_url%>" alt="nivel5" class="cardimg" />
+                </div>
+                <div>
+                  <p class="cardtitle" onclick="window.location.href = '<%= item.permalink %>' "><%= item.name %></p>
+                  <p class="carddescription"> <%= item.description %> </p>
+                  <div class="pricing">
+                    <img src="/public/media/ethereum-eth-logo.png" class="ethlogo" alt="" srcset="">
+                    <p class="cardprice"> -- </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+    </div>
+</div>

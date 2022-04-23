@@ -1,9 +1,10 @@
-<%- include('components/header'); %>
+<%- include('components/header'); %> 
 
     <link rel="stylesheet" href="/public/css/dashboard.css">
     <script defer src="/public/js/banner.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
     <link rel="stylesheet" href="/public/css/gallery.css">
+    <script defer src="/public/js/post.js"></script>
     <title>Dashboard</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
 
     <section class="grid-container-two"> 
         <div class="rounded-md bg-white/10 w-64 h-auto ">
-            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'monitor')">
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'monitor', 'panel')">
                 <div class="panel-option-icon">
                     <i class="bi bi-display-fill"></i>
                 </div>
@@ -29,9 +30,10 @@
                     </div> 
                 </div> 
             </div>  
-            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'edit')"> 
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'edit', 'panel')"> 
                 <div class="panel-option-icon" >
-                    <i class="bi bi-pen-fill"></i>
+                    <!-- <i class="bi bi-pen-fill"></i> -->
+                    <img src="/public/media/favicon.png" style="width: 20px;">
                 </div>
                 <div class="panel-option-name">
                     <div class="mx-5 duration-500 hover:-translate-y-2.5">
@@ -49,7 +51,7 @@
                     </div> 
                 </div> 
             </div>
-            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'settings')"> 
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-lg hover:shadow-white/30" onclick="post('/panel', 'settings', 'panel')"> 
                 <div class="panel-option-icon"> 
                     <i class="bi bi-gear-fill"></i>
                 </div>
@@ -65,6 +67,16 @@
                 </div>
                 <div class="mx-5 duration-500 hover:-translate-y-2.5">
                     Add
+                </div> 
+            </div>
+            <div class="flex cursor-pointer text-black w-auto h-16 py-5 px-5 mx-1.5 my-1.5 bg-white rounded-md duration-500 hover:shadow-md hover:shadow-white/30"> 
+                <div class="panel-option-icon">
+                    <i class="bi bi-chat-fill"></i>
+                </div>
+                <div class="panel-option-name">
+                    <div class="mx-5 duration-500 hover:-translate-y-2.5">
+                        Chat
+                    </div> 
                 </div> 
             </div>
         </div>
@@ -85,25 +97,12 @@
 
             <%} else { %>
 
-                <h1 class="my-5 text-2xl">Welcome, Boss</h1>
+                <h1 class="my-5 text-2xl">Welcome, Vibing Acsii Boss</h1>
 
             <% } %>
         </div>
     </section>
     <%- include('components/footer'); %>
 </body>
-    <script>
-        function post(path, params) {
-            const form = document.createElement('form');
-            form.method = 'post';
-            form.action = path;
-            const hiddenField = document.createElement('input');
-            hiddenField.type = 'hidden';
-            hiddenField.name = 'panel';
-            hiddenField.value = params;
-            form.appendChild(hiddenField);
-            document.body.appendChild(form);
-            form.submit();
-        }
-    </script>
+    
 </html>

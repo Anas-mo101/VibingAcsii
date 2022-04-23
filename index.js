@@ -6,13 +6,17 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const {v4:uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
+
 const Admin = require('./models/admin');
 const Statistics = require('./models/statistics');
-// const VaNft = require('./models/nft-col');
-const Nft = require('./nft_/auth');
-const OS = require('./nft_/os-api');
+const Vaholders = require('./models/vaholders');
+const Posts = require('./models/posts');
 
-var maintainance_lock = false;
+var helper = require('./nft_/helper');
+
+const {getCollection, isOwner, VaOwned} = require('./nft_/os-api.js'); // need plan B since os api is not reliable e.g. username & password
+
+let maintainance_lock = false;
 
 const port = process.env.PORT || 3000;
 
@@ -57,9 +61,7 @@ app.use(maintainanceCheck);
 
 app.get('/dashboard', async (req, res) => { 
     if(req.session.user){
-
         if(req.query.panel == "monitor"){
-
             Statistics.findOne({}, (err, result) => { 
                 if (err || !result) {
                     console.log(err);
@@ -71,12 +73,18 @@ app.get('/dashboard', async (req, res) => {
 
         }else if(req.query.panel == "edit"){
 
-            const collection = await OS.getCollection();
-            if(!Array.isArray(collection) || !collection[0]){
-                res.render("dashboard", {option: req.query.panel, data: []});
-            }else{
-                res.render("dashboard", {option: req.query.panel, data: collection});
-            }
+            await getCollection()
+            .then(collection => {
+                if(!Array.isArray(collection) || !collection[0]){
+                    res.render("dashboard", {option: req.query.panel, data: []}); 
+                }else{
+                    res.render("dashboard", {option: req.query.panel, data: collection});
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                res.status(500).json({});
+            });
 
         }else if(req.query.panel == "settings"){
 
@@ -97,11 +105,34 @@ app.get('/dashboard', async (req, res) => {
     }
 });
 
-app.post('/panel', async (req, res) => { 
-    if(req.session.user){
-        res.redirect('dashboard/?panel=' + req.body.panel);
+app.get('/va-holders', async (req, res) => {
+    if(maintainance_lock){
+        res.render("maintainance");
     }else{
-        res.render("login", {flag: "Session Ended"});
+        if(req.session.user){
+            let holder = await Vaholders.findOne({wid: req.session.user}).exec();
+            if(holder){
+                switch(req.query.club) {
+                    case "vafilter":
+                        res.render("va-holders", {first: false, name: holder.name, option: "vafilter"});
+                        break;
+                    case "feed":
+                        let posts = await Posts.find({}).exec();
+                        res.render("va-holders", {first: false, name: holder.name, option: "feed", posts, helper});
+                        break;
+                    case "vacollection":
+                        let collection = await VaOwned(req.session.user);
+                        res.render("va-holders", {first: false, name: holder.name, option: "vacollection",collection});
+                        break;
+                    default:
+                        res.render("va-holders", {first: false, name: holder.name, option: null});
+                }
+            }else{
+                res.render("va-holders", {first: true});
+            }
+        }else{
+            res.render("holders", {flag: "Session Ended"});
+        }
     }
 });
 
@@ -122,7 +153,7 @@ app.get('/', async (req, res) => { // collect statistics
             }
         });
     
-        const collection = await OS.getCollection();
+        const collection = await getCollection();
         if(!Array.isArray(collection) || !collection[0]){
             res.render("frontpage", {data: []} ); 
         }else{
@@ -151,30 +182,19 @@ app.get('/gallery', async (req, res) => {
                 console.log("Error: " + err);
             }
         });
-    
-        const collection = await OS.getCollection();
-        if(!Array.isArray(collection) || !collection[0]){
-            res.render("gallery", {data: []} ); 
-        }else{
-            res.render("gallery", {data: collection}); 
-        }
-    }
-});
 
-app.get('/gallery-collection', async (req, res) => {
-    // VaNft.find({}, (err, result) => { 
-    //     if (err || !result) {
-    //         console.log(err);
-    //         res.status(500).json({})
-    //     } else {
-    //         res.status(200).json(result)
-    //     } 
-    // })
-    let collection = OS.getCollection();
-    if(collection === {}){
-        res.status(500).json({})
-    }else{
-        res.status(200).json(collection.assets)
+        await getCollection()
+        .then(collection => {
+            if(!Array.isArray(collection) || !collection[0]){
+                res.render("gallery", {data: []} ); 
+            }else{
+                res.render("gallery", {data: collection}); 
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            res.status(500).json({});
+        })
     }
 });
 
@@ -210,6 +230,17 @@ app.get('/admin-logout', async (req, res) => {
     }
 });
 
+app.get('/holder-logout', async (req, res) => {    
+    if(req.session.user){
+        req.session.user = undefined;
+        res.render("holders", {flag: "Logged out"});
+    }else{
+        res.render("holders", {flag: "Session Ended"});
+    }
+});
+
+
+
 // ============== post ===================
 
 app.post('/maint-mode-switch/:state', async (req, res) => { 
@@ -229,12 +260,19 @@ app.post('/maint-mode-switch/:state', async (req, res) => {
 });
 
 app.post('/auth-wallet', async (req, res) => { 
-    const ownership = await Nft.isOwner(req.body.wid);
-    if(ownership.isHolder){
-        res.status(200).json({success: true, url: null, message: null});
-    }else{
-        res.status(200).json({success: false, url: null, message: 'No Vibing Ascii Owned !'});
-    }
+    await isOwner(req.body.wid)
+    .then(isHolder => {
+        if(isHolder){
+            req.session.user = req.body.wid 
+            res.redirect("va-holders");
+        }else{
+            res.render('holders', {flag: 'No Vibing Ascii Owned !'})
+        }
+    })
+    .catch(error => {
+        console.error('error:' + err);
+        res.render('holders', {flag: 'Server error !'})
+    });
 });
 
 app.post('/admin-login-creds', async (req, res) => {    
@@ -253,6 +291,204 @@ app.post('/admin-login-creds', async (req, res) => {
             res.render("login", {flag: "User Does Not Exist"});
         }
     });
+});
+
+app.post('/va-holder-first', async (req, res) => {    
+    const vaholders = new Vaholders({
+        name: req.body.name,
+        wid: req.session.user
+    });
+    vaholders.save()
+    res.redirect('va-holders');
+});
+
+
+app.post('/panel', async (req, res) => { 
+    if(req.session.user){
+        res.redirect('dashboard/?panel=' + req.body.panel);
+    }else{
+        res.render("login", {flag: "Session Ended"});
+    }
+});
+
+app.post('/club', async (req, res) => { 
+    if(req.session.user){
+        res.redirect('va-holders/?club=' + req.body.club);
+    }else{
+        res.render("holders", {flag: "Session Ended"});
+    }
+});
+
+app.post('/va-holder-post', async (req, res) => { 
+    if(req.session.user){
+        Vaholders.findOne({wid: req.session.user}, (err, result) => {
+            if(!err){
+                if(result){
+                    const post = new Posts({
+                        id: uuidv4(),
+                        pTitle: req.body.title,
+                        pDate: new Date(),
+                        pText: req.body.text,
+                        pAuthor: result.name,
+                        pLikes: [],
+                        pDislikes: [],
+                        pComments: []
+                    });
+                    post.save()
+                    res.redirect('va-holders/?club=feed');
+                }
+            }else{
+                res.render("holders", {flag: "Session Ended"});
+            }
+        });
+    }else{
+        res.render("holders", {flag: "Session Ended"});
+    }
+});
+
+app.post('/va-holder-like-post/:pid', async (req, res) => { // check if user already liked before liking
+    if(req.session.user){
+        let updateCondition;
+        let liked = false;
+        let disliked = false;
+        let holder = await Vaholders.findOne({wid: req.session.user}).exec();
+        let post = await Posts.findOne({id: req.params.pid}).exec();
+        
+        liked = post.pLikes.some(element => {
+           if (element.wid == req.session.user) return true;
+        });
+
+        disliked = post.pDislikes.some(element => {
+            if (element.wid == req.session.user) return true;
+        });
+
+        if(!liked && !disliked){
+            updateCondition = {
+                $push: { 
+                    pLikes: { 
+                        name: holder.name,
+                        wid: req.session.user
+                    } 
+                } 
+            }
+        }else if(liked && !disliked){
+            updateCondition = {
+                $pull: { 
+                    pLikes: { 
+                        name: holder.name,
+                        wid: req.session.user 
+                    } 
+                } 
+            }
+        }
+
+        if(updateCondition){
+            Posts.updateOne({id: req.params.pid}, updateCondition,
+                (perr,presult) => {
+                    if(!perr){
+                        res.json({liked, disliked});
+                    }else{
+                        console.error(err);
+                        res.render("holders", {flag: "Session Ended"});
+                    }
+                }
+            );
+        }else{
+            res.json({liked, disliked});
+        }
+        
+    }else{
+        res.render("holders", {flag: "Session Ended"});
+    }
+});
+
+
+app.post('/va-holder-dislike-post/:pid', async (req, res) => { // check if user already liked before liking
+    if(req.session.user){
+        let updateCondition;
+        let liked = false;
+        let disliked = false;
+        // let exist = false;
+        let holder = await Vaholders.findOne({wid: req.session.user}).exec();
+        let post = await Posts.findOne({id: req.params.pid}).exec();
+        
+        disliked = post.pDislikes.some(element => {
+           if (element.wid == req.session.user) return true;
+        });
+
+        liked = post.pLikes.some(element => {
+            if (element.wid == req.session.user) return true;
+        });
+
+        if(!liked && !disliked){
+            updateCondition = {
+                $push: { 
+                    pDislikes: { 
+                        name: holder.name,
+                        wid: req.session.user
+                    } 
+                } 
+            }
+        }else if(!liked && disliked){
+            updateCondition = {
+                $pull: { 
+                    pDislikes: { 
+                        name: holder.name,
+                        wid: req.session.user 
+                    } 
+                } 
+            }
+        }
+
+        if(updateCondition){
+            Posts.updateOne({id: req.params.pid}, updateCondition,
+                (perr,presult) => {
+                    if(!perr){
+                        res.json({liked, disliked});
+                    }else{
+                        console.error(err);
+                        res.render("holders", {flag: "Session Ended"});
+                    }
+                }
+            );
+        }else{
+            res.json({liked, disliked});
+        }
+    }else{
+        res.render("holders", {flag: "Session Ended"});
+    }
+});
+
+
+app.post('/va-holder-reply-post/:pid', async (req, res) => { 
+    if(req.session.user){
+        Vaholders.findOne({wid: req.session.user}, (err,result) => {
+            if(!err && result){
+                Posts.updateOne(
+                    {id: req.params.pid}, 
+                    {
+                        $push: { 
+                            pComments: { 
+                                cAuthor: result.name,
+                                cDate: new Date(),
+                                cText: req.body.text
+                            } 
+                        } 
+                    },
+                    (perr,presult) => {
+                        if(!perr && presult){
+                            res.redirect('/va-holders/?club=feed');
+                        }else{
+                            console.error(perr);
+                            res.render("holders", {flag: "Session Ended"});
+                        }
+                    }
+                );
+            }
+        });
+    }else{
+        res.render("holders", {flag: "Session Ended"});
+    }
 });
 
 
@@ -275,7 +511,6 @@ app.post('/admin-login-creds', async (req, res) => {
 //     osDirects: 0,
 // });
 // statistics.save()
-
 
 // const va = new VaNft({
 //     name: 'On Some Other Level',

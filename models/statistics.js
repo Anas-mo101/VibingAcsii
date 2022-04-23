@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcrypt');
 const SSchema = mongoose.Schema;
 
 const statisticsSchema = new SSchema({
